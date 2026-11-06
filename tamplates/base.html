@@ -1,0 +1,120 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Community Food Bank{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'javascript/script.js' %}" defer></script>
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">✦</div>
+            <div>
+                <h2>FoodBank</h2>
+                <span>Community Care</span>
+            </div>
+        </div>
+
+        <div class="nav-label">MAIN MENU</div>
+
+        <nav class="navigation">
+
+            <a href="{% url 'dashboard' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                <span>⌂</span> Dashboard
+            </a>
+
+            <a href="{% url 'families' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'families' %}active{% endif %}">
+                <span>♧</span> Families
+            </a>
+
+            <a href="{% url 'add_food' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'add_food' %}active{% endif %}">
+                <span>＋</span> Add Food
+            </a>
+
+            <a href="{% url 'distribute' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'distribute' %}active{% endif %}">
+                <span>⇧</span> Distribution
+            </a>
+
+            <a href="{% url 'report' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'report' %}active{% endif %}">
+                <span>▤</span> Reports
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="support-card">
+                <div class="support-icon">♡</div>
+                <h3>Making a Difference</h3>
+                <p>Every food pack brings hope to a family.</p>
+            </div>
+
+            <span class="version">Community Food Bank · v1.0</span>
+
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-toggle" id="menuToggle">
+                ☰
+            </button>
+
+            <div>
+                <h3>{% block page_heading %}Dashboard{% endblock %}</h3>
+                <p>Community Food Bank Management</p>
+            </div>
+
+            <div class="topbar-right">
+                <span class="status-dot"></span>
+                <span>System Online</span>
+                <div class="avatar">F</div>
+            </div>
+
+        </header>
+
+        <section class="content">
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                        <span>{{ message }}</span>
+                        <button class="alert-close" type="button">×</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+
+            <footer class="footer">
+                © 2026 Community Food Bank. Built with Django.
+            </footer>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

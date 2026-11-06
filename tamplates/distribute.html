@@ -1,0 +1,79 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Distribution | FoodBank{% endblock %}
+{% block page_heading %}Food Distribution{% endblock %}
+
+{% block content %}
+
+<div class="page-intro">
+    <span class="eyebrow">DISTRIBUTION</span>
+    <h1>Distribute Food Packs</h1>
+    <p>Provide food assistance to registered families.</p>
+</div>
+
+<div class="operation-layout">
+
+    <div class="form-card">
+
+        <div class="card-heading">
+            <h2>New Distribution</h2>
+            <p>Select a family and enter the requested quantity.</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Select Family</label>
+
+                <select name="family_id" required>
+
+                    <option value="">Choose a family</option>
+
+                    {% for family in families %}
+
+                    <option value="{{ family.family_id }}">
+                        {{ family.family_id }} - {{ family.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Number of Packs</label>
+
+                <input type="number"
+                       name="packs"
+                       placeholder="Enter requested packs"
+                       min="1"
+                       required>
+            </div>
+
+            <button type="submit" class="primary-btn full-btn">
+                Distribute Food →
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="stock-card">
+
+        <span class="stock-symbol">♡</span>
+
+        <p>Available Food Packs</p>
+
+        <h2>{{ available_packs }}</h2>
+
+        <span>Ready for distribution</span>
+
+        <div class="stock-decoration"></div>
+
+    </div>
+
+</div>
+
+{% endblock %}

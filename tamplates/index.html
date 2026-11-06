@@ -1,0 +1,150 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | FoodBank{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="welcome-section">
+
+    <div>
+        <span class="eyebrow">OVERVIEW</span>
+
+        <h1>Welcome to FoodBank <span>✦</span></h1>
+
+        <p>Manage families, food inventory and distributions in one place.</p>
+    </div>
+
+    <a href="{% url 'families' %}" class="primary-btn">
+        + Register Family
+    </a>
+
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <span>Total Families</span>
+            <span class="stat-icon purple">♧</span>
+        </div>
+
+        <h2>{{ total_families }}</h2>
+        <p>Registered families</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <span>Available Packs</span>
+            <span class="stat-icon green">▣</span>
+        </div>
+
+        <h2>{{ available_packs }}</h2>
+        <p>Ready for distribution</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <span>Distributed Packs</span>
+            <span class="stat-icon orange">⇧</span>
+        </div>
+
+        <h2>{{ total_distributed }}</h2>
+        <p>Total packs distributed</p>
+    </div>
+
+</div>
+
+<div class="section-heading">
+    <div>
+        <h2>Quick Actions</h2>
+        <p>Manage your food bank operations.</p>
+    </div>
+</div>
+
+<div class="quick-grid">
+
+    <a href="{% url 'families' %}" class="quick-card">
+        <span class="quick-icon purple">♧</span>
+        <h3>Register Family</h3>
+        <p>Add a new family to your food bank.</p>
+        <span class="quick-arrow">→</span>
+    </a>
+
+    <a href="{% url 'add_food' %}" class="quick-card">
+        <span class="quick-icon green">＋</span>
+        <h3>Add Food Packs</h3>
+        <p>Increase your available food stock.</p>
+        <span class="quick-arrow">→</span>
+    </a>
+
+    <a href="{% url 'distribute' %}" class="quick-card">
+        <span class="quick-icon orange">⇧</span>
+        <h3>Distribute Food</h3>
+        <p>Provide food to registered families.</p>
+        <span class="quick-arrow">→</span>
+    </a>
+
+    <a href="{% url 'report' %}" class="quick-card">
+        <span class="quick-icon blue">▤</span>
+        <h3>View Reports</h3>
+        <p>Review distribution records.</p>
+        <span class="quick-arrow">→</span>
+    </a>
+
+</div>
+
+<div class="section-heading">
+    <div>
+        <h2>Recent Distributions</h2>
+        <p>Latest food distribution activity.</p>
+    </div>
+
+    <a href="{% url 'report' %}" class="text-link">
+        View all →
+    </a>
+</div>
+
+<div class="table-card">
+
+    <div class="table-wrap">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Family ID</th>
+                    <th>Family Name</th>
+                    <th>Packs Received</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in recent_distributions %}
+                <tr>
+                    <td><strong>{{ item.family.family_id }}</strong></td>
+                    <td>{{ item.family.name }}</td>
+                    <td>
+                        <span class="quantity-badge">
+                            {{ item.packs }} packs
+                        </span>
+                    </td>
+                    <td>{{ item.distributed_at|date:"d M Y, h:i A" }}</td>
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="empty-state">
+                        No distribution records yet.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

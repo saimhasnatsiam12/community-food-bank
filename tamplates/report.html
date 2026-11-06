@@ -1,0 +1,141 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Reports | FoodBank{% endblock %}
+{% block page_heading %}Food Bank Reports{% endblock %}
+
+{% block content %}
+
+<div class="page-intro">
+    <span class="eyebrow">ANALYTICS</span>
+    <h1>Food Bank Report</h1>
+    <p>Overview of registered families and food distribution.</p>
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <span>Available Packs</span>
+            <span class="stat-icon green">▣</span>
+        </div>
+
+        <h2>{{ available_packs }}</h2>
+        <p>Remaining food stock</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <span>Total Distributed</span>
+            <span class="stat-icon orange">⇧</span>
+        </div>
+
+        <h2>{{ total_distributed }}</h2>
+        <p>All-time distribution</p>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <span>Total Families</span>
+            <span class="stat-icon purple">♧</span>
+        </div>
+
+        <h2>{{ families|length }}</h2>
+        <p>Registered families</p>
+    </div>
+
+</div>
+
+<div class="section-heading">
+    <div>
+        <h2>Registered Families</h2>
+        <p>Family information overview.</p>
+    </div>
+</div>
+
+<div class="table-card">
+    <div class="table-wrap">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Family ID</th>
+                    <th>Name</th>
+                    <th>Members</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for family in families %}
+
+                <tr>
+                    <td>{{ family.family_id }}</td>
+                    <td>{{ family.name }}</td>
+                    <td>{{ family.members }}</td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="3" class="empty-state">
+                        No families found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="section-heading">
+    <div>
+        <h2>Distribution History</h2>
+        <p>Complete food distribution records.</p>
+    </div>
+</div>
+
+<div class="table-card">
+    <div class="table-wrap">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Family ID</th>
+                    <th>Family Name</th>
+                    <th>Packs Received</th>
+                    <th>Date & Time</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in history %}
+
+                <tr>
+                    <td>{{ item.family.family_id }}</td>
+                    <td>{{ item.family.name }}</td>
+                    <td>
+                        <span class="quantity-badge">
+                            {{ item.packs }}
+                        </span>
+                    </td>
+                    <td>{{ item.distributed_at|date:"d M Y, h:i A" }}</td>
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="4" class="empty-state">
+                        No distribution history available.
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+{% endblock %}

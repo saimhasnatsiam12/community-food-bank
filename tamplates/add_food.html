@@ -1,0 +1,61 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Add Food | FoodBank{% endblock %}
+{% block page_heading %}Food Inventory{% endblock %}
+
+{% block content %}
+
+<div class="page-intro">
+    <span class="eyebrow">INVENTORY</span>
+    <h1>Add Food Packs</h1>
+    <p>Increase the available food stock for your community.</p>
+</div>
+
+<div class="operation-layout">
+
+    <div class="form-card">
+
+        <div class="card-heading">
+            <h2>Add New Stock</h2>
+            <p>Enter the quantity of food packs.</p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Number of Food Packs</label>
+
+                <input type="number"
+                       name="packs"
+                       placeholder="Enter pack quantity"
+                       min="1"
+                       required>
+            </div>
+
+            <button type="submit" class="primary-btn full-btn">
+                + Add Food Packs
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="stock-card">
+
+        <span class="stock-symbol">▣</span>
+
+        <p>Current Available Stock</p>
+
+        <h2>{{ available_packs }}</h2>
+
+        <span>Food Packs</span>
+
+        <div class="stock-decoration"></div>
+
+    </div>
+
+</div>
+
+{% endblock %}
